@@ -20,9 +20,7 @@ import re
 
 
 #100009809000.pdf
-import re
-
-def extract_metadata_with_regex(text):
+def icici_lombard_metadata_with_regex(text):
     patterns = {
         "insurer_name": r"(ICICI\s+Lombard)",
         "policy_number": r"Policy\s*Number\s*[:\-]?\s*([A-Z0-9\/\-]+)",
@@ -133,7 +131,7 @@ pdf_path = "../data/100009809000.pdf"
 clean_text, pages_json = extract_pdf(pdf_path)
 save_outputs(clean_text, pages_json)
 
-metadata = extract_metadata_with_regex(clean_text)
+metadata = icici_lombard_metadata_with_regex(clean_text)
 
 print("Extraction completed")
 print("Metadata:")
