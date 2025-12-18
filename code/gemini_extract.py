@@ -1,22 +1,25 @@
 import json
 import re
+import os
+from datetime import datetime, timezone
 from pypdf import PdfReader
 import google.generativeai as genai
 from dotenv import load_dotenv
-import os
 
-load_dotenv() 
-# ==================================================
-# CONFIG
+
+# LOAD ENV
+load_dotenv()
+
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
 if not GEMINI_API_KEY:
     raise EnvironmentError("GEMINI_API_KEY not found in .env file")
 
-PDF_PATH = "../data/34830799202500.pdf"
+PDF_PATH = "../data/NivaBupa/35091132202500.pdf"
 
 # FINAL DATABASE SCHEMA
+
 FINAL_SCHEMA = {
+    "created_at": "",
     "insurance_company": "",
     "policy_number": "",
     "policy_holder": "",
@@ -26,6 +29,7 @@ FINAL_SCHEMA = {
     "insured_persons": [],
     "nominee_details": []
 }
+
 
 # PDF TEXT EXTRACTION
 def extract_text_from_pdf(pdf_path: str) -> str:
@@ -37,10 +41,9 @@ def extract_text_from_pdf(pdf_path: str) -> str:
             text += page_text + "\n"
     return text.strip()
 
-
 # GEMINI SETUP
-genai.configure(api_key=GEMINI_API_KEY)
 
+genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("models/gemini-2.5-flash")
 
 # GEMINI EXTRACTION (STRICT JSON)
@@ -88,22 +91,27 @@ Document text:
     response = model.generate_content(prompt)
     raw = response.text.strip()
 
+    # Clean markdown if any
     raw = raw.replace("```json", "").replace("```", "").strip()
+
+    # Extract JSON block
     match = re.search(r"\{.*\}", raw, re.DOTALL)
-
     if not match:
-        return FINAL_SCHEMA
+        data = FINAL_SCHEMA.copy()
+    else:
+        try:
+            data = json.loads(match.group())
+        except json.JSONDecodeError:
+            data = FINAL_SCHEMA.copy()
 
-    try:
-        data = json.loads(match.group())
-    except json.JSONDecodeError:
-        return FINAL_SCHEMA
-
+    # Ensure all schema keys exist
     for key in FINAL_SCHEMA:
         data.setdefault(key, FINAL_SCHEMA[key])
 
-    return data
+    # Add current date & time (ISO-8601, timezone-aware)
+    data["created_at"] = datetime.now(timezone.utc).astimezone().isoformat()
 
+    return data
 
 # MAIN — JSON ONLY OUTPUT
 def main():
@@ -111,6 +119,6 @@ def main():
     result = extract_insurance_metadata(pdf_text)
     print(json.dumps(result, ensure_ascii=False))
 
-# ==================================================
+# RUN
 if __name__ == "__main__":
     main()
