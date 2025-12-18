@@ -1,52 +1,121 @@
-import google.generativeai as genai
-import os
 import json
-from code.extractor import extract_text_from_pdf 
+import re
+from pypdf import PdfReader
+import google.generativeai as genai
+from dotenv import load_dotenv
+import os
 
+load_dotenv() 
+# ==================================================
+# CONFIG
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+if not GEMINI_API_KEY:
+    raise EnvironmentError("GEMINI_API_KEY not found in .env file")
 
-model = genai.GenerativeModel("gemini-1.5-flash")
+PDF_PATH = "../data/2742112600033469_POLICY_DOC.pdf"
 
-def extract_metadata_with_gemini(text):
+# ==================================================
+# FINAL JSON SCHEMA (MongoDB Ready)
+# ==================================================
+FINAL_SCHEMA = {
+    "insurer_name": "",
+    "policy_number": "",
+    "policy_holder": "",
+    "policy_start_date": "",
+    "policy_end_date": "",
+    "address": "",
+    "nominee_details": []
+}
+
+# ==================================================
+# PDF TEXT EXTRACTION
+# ==================================================
+def extract_text_from_pdf(pdf_path: str) -> str:
+    reader = PdfReader(pdf_path)
+    text = ""
+    for page in reader.pages:
+        page_text = page.extract_text()
+        if page_text:
+            text += page_text + "\n"
+    return text.strip()
+
+# ==================================================
+# GEMINI SETUP
+# ==================================================
+genai.configure(api_key=GEMINI_API_KEY)
+
+model = genai.GenerativeModel(
+    model_name="models/gemini-2.5-flash"
+)
+
+# ==================================================
+# GEMINI EXTRACTION (STRICT JSON)
+# ==================================================
+def extract_insurance_metadata(text: str) -> dict:
     prompt = f"""
-    You are an insurance document parser.
+Extract insurance policy data from the text below.
 
-    Extract metadata and return ONLY valid JSON.
+Rules:
+- Output ONLY valid JSON
+- No markdown, no comments, no extra text
+- Missing values must be empty strings
 
-    Fields:
-    policy_type
-    policy_number
-    insurer_name
-    insured_name
-    policy_start_date
-    policy_end_date
-    premium_amount
-    sum_insured
+Required JSON format:
+{{
+  "insurer_name": "",
+  "policy_number": "",
+  "policy_holder": "",
+  "policy_start_date": "",
+  "policy_end_date": "",
+  "address": "",
+  "nominee_details": [
+    {{
+      "name": "",
+      "date_of_birth": "",
+      "age": "",
+      "gender": ""
+    }}
+  ]
+}}
 
-    Vehicle fields (if applicable):
-    registration_number
-    engine_number
-    chassis_number
-    make
-    model
-    idv
-
-    CWR fields (if applicable):
-    project_name
-    project_location
-    contract_value
-    risk_cover
-
-    Document Text:
-    {text}
-    """
+Document text:
+{text}
+"""
 
     response = model.generate_content(prompt)
-    return json.loads(response.text)
+    raw = response.text.strip()
 
-path = "../data/MotorprivateCarPolicyWording.pdf"
-data = extract_text_from_pdf(path)
-print(data)
-json_data = extract_metadata_with_gemini(data)
-print(json_data)
+    # Remove markdown if present
+    raw = raw.replace("```json", "").replace("```", "").strip()
+
+    # Extract JSON only
+    match = re.search(r"\{.*\}", raw, re.DOTALL)
+    if not match:
+        return FINAL_SCHEMA
+
+    try:
+        data = json.loads(match.group())
+    except json.JSONDecodeError:
+        return FINAL_SCHEMA
+
+    # Ensure MongoDB-safe structure
+    data.setdefault("nominee_details", [])
+
+    return data
+
+# ==================================================
+# MAIN (JSON ONLY OUTPUT)
+# ==================================================
+def main():
+    pdf_text = extract_text_from_pdf(PDF_PATH)
+    result = extract_insurance_metadata(pdf_text)
+
+    # FINAL OUTPUT — JSON ONLY
+    print(json.dumps(result, ensure_ascii=False))
+
+# ==================================================
+# RUN
+# ==================================================
+if __name__ == "__main__":
+    main()
