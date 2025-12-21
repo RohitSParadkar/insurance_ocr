@@ -2,7 +2,7 @@ from insertData import insert_json
 from gemini_extract import extract_insurance_metadata , extract_text_from_pdf
 import json
 
-PDF_PATH = "../data/NivaBupa/35561908202500.pdf"
+PDF_PATH = "../data/2742112600033469_POLICY_DOC.pdf"
 # MAIN — JSON ONLY OUTPUT
 def main():
     pdf_text = extract_text_from_pdf(PDF_PATH)

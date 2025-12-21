@@ -113,11 +113,16 @@ Document text:
 
     return data
 
+
+
+
 # MAIN — JSON ONLY OUTPUT
 def main():
     pdf_text = extract_text_from_pdf(PDF_PATH)
-    result = extract_insurance_metadata(pdf_text)
-    print(json.dumps(result, ensure_ascii=False))
+    total_characters = len(pdf_text)
+    print("Total number of characters in document:", total_characters)
+    # result = extract_insurance_metadata(pdf_text)
+    # print(json.dumps(result, ensure_ascii=False))
 
 # RUN
 if __name__ == "__main__":
