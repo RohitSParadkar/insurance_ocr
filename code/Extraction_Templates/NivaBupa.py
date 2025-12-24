@@ -23,57 +23,79 @@ def extract_policy_holder_name(text: str) -> Optional[str]:
     pattern = r"\bDear\.?\s+([^\n\r]+)"
     return extract_with_regex(text, pattern)
 
+
 def extract_company_name(text: str) -> Optional[str]:
-    pattern = r"Welcome\s+to\s+(.+?)\s+family"
-    return extract_with_regex(text, pattern)
+    """
+    Extract insurer name between 'for choosing' and 'as your'
+    """
+    pattern = r"for\s+choosing\s+(.*?)\s+as\s+your"
+    match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
+    return match.group(1).strip() if match else None
+
+    match = pattern.search(text)
+    if match:
+        return match.group(1).strip()
+    return None
 
 def extract_policy_number(text: str) -> Optional[str]:
     pattern = r"Policy\s*(?:No|Number)\.?\s*([0-9]+)"
     return extract_with_regex(text, pattern)
 
+
 def extract_contact_number(text: str) -> Optional[str]:
-    pattern = (
-        r"(?:Insured\s+Contact\s+No|Customer\s+contact\s+number|Contact\s+No)"
-        r"\s*[:\-]?\s*"
-        r"([0-9Xx*]{8,15})"
+    """
+    Extract mobile number that appears between 'Email ID' and 'Invoice Number'.
+    Handles partially masked numbers as well.
+    """
+    pattern = re.compile(
+        r"Email ID\s*[\n:]?.*?\n\s*(\d{2}\*+\d{2,4})\s*.*?Invoice Number",
+        re.DOTALL
     )
-    match = re.search(pattern, text, re.IGNORECASE)
-    return match.group(1) if match else None
+    
+    match = pattern.search(text)
+    if match:
+        return match.group(1).strip()
+    return None
 
 def extract_tp_cover_dates(text: str) -> Tuple[Optional[str], Optional[str]]:
     """
-    Extract TP cover start and end dates
-    Returns (start_date, end_date)
+    Extract Policy Start Date and End Date between
+    'Policy Number' and 'Base Sum Insured'
+
+    Supports:
+    - DD/MM/YYYY
+    - DD-MMM-YYYY (09-Sep-2025)
     """
-    pattern = (
-        r"Cover\s+Period\s+"
-        r"(\d{1,2}\s+[A-Za-z]{3}\s+'\d{2})"
-        r".*?"
-        r"(\d{1,2}\s+[A-Za-z]{3}\s+'\d{2})"
+
+    date_pattern = r"(?:\d{2}/\d{2}/\d{4}|\d{2}-[A-Za-z]{3}-\d{4})"
+
+    block_pattern = (
+        r"Policy\s+Number.*?"
+        r"(?:Policy\s+Commencement\s+Date.*?From\s+)?"
+        rf"(From\s+{date_pattern})\s+\d{{2}}:\d{{2}}.*?"
+        r"(?:Policy\s+Expiry\s+Date.*?To\s+)?"
+        rf"(To\s+{date_pattern})\s+\d{{2}}:\d{{2}}.*?"
+        r"Base\s+Sum\s+Insured"
     )
 
-    match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
+    match = re.search(block_pattern, text, re.IGNORECASE | re.DOTALL)
 
     if not match:
         return None, None
 
-    start_date = match.group(1)
-    end_date = match.group(2)
+    start_date = match.group(1).replace("From", "").strip()
+    end_date = match.group(2).replace("To", "").strip()
 
     return start_date, end_date
 
-def extract_premium_amount(text: str) -> str | None:
+def extract_premium_amount(text: str) -> Optional[str]:
     """
-    Extracts premium amount from insurance policy text.
-    Example match: ₹ 843.00
+    Extract Net Premium amount after 'Net Premium / Taxable value'
     """
-    pattern = r"Premium\s*amount\s*:\s*₹?\s*([\d,]+(?:\.\d{2})?)"
-
+    pattern = r"Net\s+Premium.*?\(Rs\.\)\s*([\d,]+\.\d{2})"
     match = re.search(pattern, text, re.IGNORECASE)
-    if match:
-        return match.group(1).replace(",", "").strip()
+    return match.group(1) if match else None
 
-    return None
 
 def extract_registration_number(text: str) -> str | None:
     """
@@ -88,24 +110,24 @@ def extract_registration_number(text: str) -> str | None:
 
     return None
 
-def extract_vehicle_idv(text: str) -> Optional[float]:
+def extract_sum_insured_value(text: str) -> Optional[str]:
     """
-    Extract Vehicle IDV from policy text.
-    Returns float value or None.
+    Extract Base Sum Insured value between
+    'Base Sum Insured' and 'Policy Commencement Date'
+
+    Supports:
+    - 10,00,000
+    - Unlimited
     """
 
-    # Pattern: Header followed by numeric row
     pattern = (
-        r"Vehicle\s+IDV.*?Total\s+IDV.*?\n"
-        r"([\d,]+\.\d{2})"
+        r"Base\s+Sum\s+Insured\s*"
+        r"((?:[\d,]+)|Unlimited)\s*"
+        r"(?:Policy\s+Commencement\s+Date|Policy\s+Commencement\s+Date\s+and\s+Time)"
     )
 
     match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
-    if match:
-        value = match.group(1).replace(",", "")
-        return float(value)
-
-    return None
+    return match.group(1).strip() if match else None
 
 
 def extract_digital_signer(text: str) -> Optional[str]:
@@ -124,24 +146,22 @@ def extract_digital_signer(text: str) -> Optional[str]:
 
 def extract_policy_variant(text: str) -> Optional[str]:
     """
-    Extract policy name appearing after:
-    'Company Limited. Auto Secure -'
-    and before:
-    'UIN :'
-    Whitespace and line-break tolerant
+    Extract product name between 'Product Name' and 'Product UIN'
+
+    Supports:
+    - Product Name: Aspire, Product UIN:
+    - Product Name: ReAssure 2.0 | Product UIN:
     """
+
     pattern = (
-        r"Company\s+Limited\.\s*"
-        r"Auto\s+Secure\s*-\s*"
+        r"Product\s*Name\s*[:\-]?\s*"
         r"(.*?)\s*"
-        r"UIN\s*:"
+        r"(?:,|\||)\s*"
+        r"Product\s*UIN"
     )
 
     match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
-    if match:
-        return match.group(1).strip().rstrip("-").strip()
-
-    return None
+    return match.group(1).strip() if match else None
 
 def extract_policy_metadata(text: str) -> dict:
     start_date, end_date = extract_tp_cover_dates(text)
@@ -155,7 +175,7 @@ def extract_policy_metadata(text: str) -> dict:
         "tp_policy_end_date": end_date,
         "net_premium": extract_premium_amount(text),
         "Vehicle_Registration_No":extract_registration_number(text),
-        "vehicle_idv ":extract_vehicle_idv(text),
+        "sum_insured ":extract_sum_insured_value(text),
         "area_manager" :extract_digital_signer(text)
     }
 
@@ -179,7 +199,7 @@ def save_full_text_to_file(full_text: str, pdf_path: str, output_dir="temp_text"
     return str(txt_path)
 
 
-PDF_PATH = "../../data/motorData/TATA_6104039405-00.pdf"
+PDF_PATH = "../../data/healthData/Niva Buppa/35829924202500.pdf"
 
 result = extract_text_from_pdf_via_svg_all_pages(PDF_PATH)
 

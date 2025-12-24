@@ -2,43 +2,45 @@
 --- PAGE 1 ---
 
 Name :
-Miss. Charu
-Rajput
+Miss. Suman
+Jha
 
 
-+91 87**43**67
++91 94**34**89
 
 
-raj********@gmail.com
+san********@gmail.com
 Address :
-Vc,
+Gram Plus Post Office,
 eiwewo,
-Vvccv,
-DELHI,
-DELHI-
+Banjhi Bazar,
+SAHIBGANJ,
+SAHIBGANJ-
 
-110091,
-DELHI
+816109,
+JHARKHAND
 Valid from
 →
 
 Valid till
-OD Cover Period
-25 Apr '25(00:01Hrs)
+TP Cover Period
+13 Apr '25(00:01Hrs)
 
 
-24 Apr '26 (Midnight)
+
+
+12 Apr '26 (Midnight)
 Premium amount :
 ₹
-408.00
-Dear Miss. Charu
-Rajput
+843.00
+Dear Miss. Suman
+Jha
 Welcome to Tata AIG General Insurance Company Limited family & we thank you for choosing our policy
 
 for your
 
 motor vehicle insurance. Your Policy No.
-6100021729
+6104039405
 has
 been
 
@@ -51,145 +53,116 @@ for full policy wordings
 Certificate of Insurance and Policy Schedule Form 51 of the Central Motor Vehicle Rules, 1989
 Policy Details
 Policy No & Certificate No :
-6100021729 -
+6104039405 -
 
 00
 Insured Name :
-Miss. Charu Rajput
+Miss. Suman Jha
 Address :
-Vc,
+Gram Plus Post Office,
 eiwewo,
-Vvccv,
-DELHI
-DELHI-
+Banjhi Bazar,
+SAHIBGANJ
+SAHIBGANJ-
 
-110091,
-DELHI
-Period of Insurance OD cover period :
-25 Apr '25(00:01Hrs) to
+816109,
+JHARKHAND
+TP cover period :
+13 Apr '25(00:01Hrs) to
 
-24 Apr '26 (Midnight)
+12 Apr '26 (Midnight)
 Policy Issuance Date :
-23 Apr '25
+12 Apr '25
 Customer / Lessor GSTIN :
 NA
 Customer ID :
 NA
 Customer contact number :
-87**43**67
+94**34**89
 Proposal No :
-PR/25/6100003046
+PR/25/6101095583
 Covernote no / Issuance date :
-NA/23 Apr '25
+NA/12 Apr '25
 Alternate Policy No :
 NA
 Vehicle Details
 Registration no :
-KA 01 HL 6237
+JH 18 C 5476
 Registration Authority :
-BENGALURU KA 01
+SAHIBGANJ JH 18
 Make/Model :
-HONDA/ACTIVA
+HERO HONDA/SUPER SPLENDOR
 Fuel Type :
 PETROL
 Variant :
-3G
+DISC SELF
 Engine Number/Battery Number :
-5545545454/NA
+JA05ECD9K27783/NA
 Chassis number :
-Y5656564565
+MBLJA05EKD9K27527
 Engine/Battery Capacity (CC/ KW) :
-110
+125
 Seating Capacity (including driver) :
 2
 Mfg Year :
-2015
+2013
 Date of Registration :
-31/08/2023
+27/12/2013
 Body Type :
-SCOOTER
+MOTOR CYCLE
 Trailer Regn No. / Chassis No. :
 NA
 HP/HYP/Lease :
 NA
 Zone :
-A
+B
 Geographical Area :
 India
-Insured Declared Value (IDV)
-Vehicle IDV (
-₹
-)
-Electrical Accessories (
-₹
-)
-Non Electrical Accessories-Vehicle IDV (
-₹
-)
-Bi-Fuel/CNG/LPG Kit (
-₹
-)
-Trailer/Side car IDV (
-₹
-)
-Total IDV (
-₹
-)
-44,960.00
-0.00
-0.00
-0.00
-0.00
-44,960.00
 Schedule Of Premium
-Section I Own Damage (A)
-Basic Own Damage
-Premium on Vehicle and non electrical accessories
-460.75
+Section II Liability (B)
+Third Party Premium
+Basic TP premium
+714.00
 ₹
 
-Discounts Under Own Damage Section
-Less: No claim bonus (25%)
-115.19
+Total Liability Premium (B)
 ₹
 
-Total Own Damage Premium (A)
+714.00
+Net Premium (B)
 ₹
 
-345.56
-Net Premium (A+C)
-₹
-
-346.00
+714.00
 IGST @18 %
 ₹
 
-62.00
+129.00
 Total Policy Premium
-408.00
+843.00
 ₹
 
 Agent Name :
 
-pi uat
+jio insurance broking
+limited
 Agent License Code :
 
-184377388774
+347
 
 •
 
 Agent Contact No. :
 
-9898989890(or landline)
-Auto Secure - Standalone Own Damage Two
-Wheeler Policy
+8356851829(or landline)
+Auto Secure - Liability Only Policy
 
-D o cI t  Draf t - Fo r Testi ng
 
 --- PAGE 2 ---
 
 Drivers Clause :
-Persons or classes of persons entitled to drive : Any person including
+Persons or classes of persons entitled to drive : Any person
+
+including
 
 the
 
@@ -230,58 +203,21 @@ Policy
 and undertakes to renew and maintain a valid and effective PUC and/or fitness Certifitate, as
 
 applicable, during the subsistence of the Policy.
-Number of claims covered under Depreciation Reimbursement Cover
+Limits of Liability : Under Section I - 1 (i)
+of policy (Death of or bodily injury) :
 
-: NA,
-
-Number of claims covered under Depreciation Allowance Battery Cover
-
-: 0,
-
-Number of claims
-covered under Engine Secure
-Cover : NA,
-
-Tyre and Rim Secure : NA
-Deductible under Section - I :
-
+Such amount as is necessary to meet the requirements of the Motor Vehicles Act, 1988
+Under Section I -1 (ii)
+of policy (Third Party Property Damage) :
 ₹
-100.00
 
-(Compulsory Deductible
+100.00•
+Under Section II :
+1 Year(s)
+
+Compulsory PA Cover for Owner Driver CSI :
 ₹
-100.00, Voluntary Deductible :
-0.00, Imposed Excess:
-
-0.00) Franchisee : NA ,
-Depreciation Allowance
-Battery Deductible - 5 % of the claim amount subject to minimum of Rs. 500
-Deductible under Engine Secure :
-
-
-•
-Add-On Cover :
-NA
-No Claim Bonus :
-The insured is entitled for a No Claim Bonus (NCB) on the own damage
-
-section
-
-of the policy, if no claim is made or pending during the preceding year(s),
-as
-
-follows : The preceding year 20%, preceding two consecutive years 25%, preceding three
-
-consecutive
-
-years 35%, preceding four consecutive years 45%, preceding five
-consecutive years 50% of NCB on OD Premium. NCB will only be allowed provided the policy is
-
-renewed
-
-within 90 days of the expiry date of the previous policy.
 Subject to : (A) IMT Endorsement No. :
-IMT 22
 TATA AIG Auto Secure endorsement No. (TA) :
 GSTIN : 27AABCT3518Q1ZW - MAHARASHTRA Service Accounting Code : 997134
 I/We hereby certify that the Policy to which this Certificate relates as well as this
@@ -290,9 +226,9 @@ Certificate of Insurance are
 issued in accordance with provisions of Chapter X and XI of
 Motor Vehicles Act, 1988.
 In witness whereof this Policy has been signed at Mumbai on : Receipt (s) :
-PD300000130304
+PD300014185780
 
-23/04/2025
+12/04/2025
 For stamp duty of
 ₹
 0.25 paid. In cash or demand draft or by
@@ -300,16 +236,15 @@ For stamp duty of
 pay order, vide Receipt/
 Challan no :
 dated the
-Policy Number : 6100021729 •  GSTN Number : 27AABCT3518Q1ZW
+Policy Number : 6104039405 •  GSTN Number : 27AABCT3518Q1ZW
 For & On Behalf of
 Tata AIG General Insurance Company Ltd.
 docit-digital-sign
 Policy Servicing Office :
-A-501, Building no-4 IT Infinity Park
-, MALAD EAST , MAHARASHTRA , 400097 •  Tel. No
+6TH, 7TH AND 8TH FLOOR R TECH PARK,VILLAGE PAHADI TAL. MUMBAI SUBURBAN DISTRICT BEARING CTS NO 586/2(PART), 586/4(PART), 586/7/B, ,
+GOREGAON EAST , MAHARASHTRA , 400063 •  Tel. No
 
-:
-- phone
+: 22 - 48808800
 Important Notice
 The Insured is not indemnified if the vehicle is used or driven
 
@@ -409,11 +344,11 @@ amendments/modifications/alterations and records the same through
 separate endorsement.
 Receipt
 Receipt No. :
-PD300000130304
+PD300014185780
 Receipt Date :
-23/04/2025
+12/04/2025
 Policy No. :
-6100021729
+6104039405
 
 00
 
@@ -432,13 +367,13 @@ Balance (
 ₹
 )
 1
-6100021729 00 00
+6104039405 00 00
 onlinePayment
-408
-408
+843
+843
 0
 Payer Name :
-Charu Rajput
+Suman Kumar Jha
 Note :
 1
 .
@@ -472,47 +407,39 @@ Limited. The insurance cover for the risk shall be as per the terms
 and`
 
 conditions of the insurance policy if and when issued.
-Auto Secure - Standalone Own Damage Two
-Wheeler Policy
-
-D o cI t  Draf t - Fo r Testi ng
-Digitally Signed by: Shammi Kapoor Date: 23/04/2025 Location: Mumbai
-
---- PAGE 3 ---
-
 Transcript of Information/Declaration
 Insured and Vehicle Details
 1
 .
 Name (Registered Owner of the Motor Vehicle) :
-Miss. Charu
-Rajput
+Miss. Suman
+Jha
 2
 .
 Vehicle Details :
-HONDA ACTIVA
+HERO HONDA SUPER SPLENDOR
 3
 .
 Address for Communication :
 
-Vc,
+Gram Plus Post Office,
 
 eiwewo,
 
-Vvccv,
+Banjhi Bazar,
 
-DELHI,
+SAHIBGANJ,
 
-DELHI-
+SAHIBGANJ-
 
-110091,
+816109,
 
-DELHI
+JHARKHAND
 4
 .
 Vehicle Type :
 
-SCOOTER
+MOTOR CYCLE
 5
 .
 Fuel Type :
@@ -551,28 +478,34 @@ Is battery a part of Ex-showroom price of the vehicle:
 Insured’s Declared Value :
 
 ₹
-44,960
+0
 15
 .
 Date of Registration :
 
-31/08/2023
+27/12/2013
 16
 .
 Proposed Period of Insurance
-OD cover period :
-25 Apr '25(00:01Hrs) to
+TP cover period :
+13 Apr '25(00:01Hrs) to
 
-24 Apr '26 (Midnight)
+12 Apr '26 (Midnight)
+Auto Secure - Liability Only Policy
+
+Digitally Signed by: Shammi Kapoor Date: 12/04/2025 Location: Mumbai
+
+--- PAGE 3 ---
+
 Previous Insurance Details
 1
 .
 Policy Number
-6546456565656
+01745654160000
 2
 .
 Date of expiry :
-02/04/2025
+12/04/2025
 3
 .
 Type of cover :
@@ -581,70 +514,23 @@ PackagePolicy
 .
 Name & address if the Insurer :
 
-CHOLAMANDALAM CHOLAMANDALAM MS GENERAL INSURANCE CO.LTD.
+ACKO ACKO
 5
 .
 Claim in Previous Policy Period :
 
-No
+Yes
 6
-.
-NCB in previous policy :
-
-20%
-7
-.
-NCB Claimed :
-
-25%
-8
 .
 Period of insurance
 OD cover period :
-03 Apr '24 to
+13 Apr '24 to
 
-02 Apr '25
+12 Apr '25
 TP cover period :
-03 Apr '24 to
+13 Apr '24 to
 
-02 Apr '25
-Restriction of Cover / Discounts / Concessions / Extended Covers
-1
-.
-ARAI Membership Number :
-
-NA
-2
-.
-Third Party Property Damage Cover restricted to
-₹
-6,000/ only :
-
-No
-3
-.
-Is Voluntary Deductible opted :
-No
-4
-.
-Amount of Deductible opted :
-
-NA
-5
-.
-Vehicle is fitted with Anti Theft Device approved by ARAI :
-
-No
-6
-.
-Add-on Covers opted :
-
-NA
-7
-.
-PUC Certificate Number and PUC Expiry Date :
-
-NA -
+12 Apr '25
 Declaration for No Claim Bonus (If NCB Confirmation is not submitted
 
 but NCB
@@ -684,64 +570,79 @@ Records) Amendment Rules, 2023 as
 amended from time to time.
 Disclaimer :
 
-SAOD policy is only applicable, if you have an active third-party insurance policy of the vehicle, in place. The Coverage under this policy is only for Own Damage
+Insurance is the subject matter of solicitation. For more details on benefits, exclusions,
 
-and no
-other liability in connection with the vehicle. Insurance is the subject matter of solicitation. For more details on benefits, exclusions, limitations, terms & conditions,
+limitations, terms & conditions, please refer sales brochure/ policy
 
-please refer sales
-brochure/ policy wordings on www.tataaig.com carefully, before concluding a sale. Purchase of Tata AIG General Insurance Company Limited products
+wordings on
+www.tataaig.com carefully, before concluding a sale. Purchase of Tata AIG General
 
-are purely on voluntary
-basis. #Add On covers can only be purchased with the base product and on payment of an additional premium.
+Insurance Company Limited products are purely on voluntary basis.
 Prohibition of Rebates :
 
-- Section 41 of the Insurance Act, 1938 as amended by Insurance Laws (Amendment) Act, 2015.
+- Section 41 of the Insurance Act, 1938 as amended by Insurance Laws (Amendment) Act,
 
-1. No person shall allow or offer to allow either directly or indirectly as an inducement to any person to
+2015.
+
+1. No person shall allow or offer to allow either directly or indirectly as an inducement to any
+
+person to
 
 take
 
 out or renew or continue an insurance in respect of any kind of risk
-relating to lives or property in India,
+relating to lives or
+
+property in India,
 
 any
 
-rebate of the whole or part of the commission payable or any rebate of premium shown on the policy, nor shall
+rebate of the whole or part of the commission payable or any rebate of premium shown on the
+
+policy, nor shall
 
 any person taking out or
-renewing or continuing a policy accept any rebate, except such rebate as may be
+renewing or continuing a policy accept any rebate, except such rebate
+
+as may be
 
 allowed
 
 in accordance with the published prospectus or tables of the insurer.
 
-2. Any person making default in complying with the provisions of this section shall be liable for penalty
+2. Any person making default in complying with the provisions of this section shall be liable
+
+for penalty
 
 which
 
 may extend to ten lakhs.
 Grievance Redressal Procedure
 
-: As per Regulation 17 of IRDA of India (Protection of Policyholders Interests) Regulation, 2017.
+: As per Regulation 17 of IRDA of India (Protection of Policyholders Interests) Regulation,
+
+2017.
 Section 64 VB of the Insurance Act 1938
 
-: Commencement of risk cover under the policy is subject to receipt of premium by Tata AIG General Insurance
+: Commencement of risk cover under the policy is subject to receipt of premium by Tata AIG
+
+General Insurance
 
 Company Limited.
-Auto Secure - Standalone Own Damage Two Wheeler Policy - UIN : IRDAN108RPMT0002V02201920
+Auto Secure - Liability Only Policy - UIN : IRDAN108RP0008V01200001
 Tata AIG General Insurance Company Limited
 
-Registered Office : Peninsula Business Park, Tower A, 15th Floor, G.K. Marg, Lower Parel, Mumbai - 400013, Maharashtra, India •
+Registered Office : Peninsula Business Park, Tower A, 15th Floor, G.K. Marg, Lower Parel, Mumbai
+
+- 400013, Maharashtra, India •
 
 24x7 Toll Free No: 1800 266 7780
 
 • Email :
-customersupport@tataaig.com • website : www.tataaig.com • IRDA of India Registration No: 108 • CIN:
+customersupport@tataaig.com • website : www.tataaig.com • IRDA of India Registration
+
+No: 108 • CIN:
 
 U85110MH2000PLC128425 • Company PAN No. : AABCT3518Q
 TAGIC/PS/MRTW/Feb 22/05      Ver1/All 2547
-Auto Secure - Standalone Own Damage Two
-Wheeler Policy
-
-D o cI t  Draf t - Fo r Testi ng
+Auto Secure - Liability Only Policy

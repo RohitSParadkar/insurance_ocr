@@ -6,14 +6,6 @@ from pathlib import Path
 
 
 
-# PDF TEXT EXTRACTION
-def extract_text_from_pdf(file_path):
-    text = ""
-    with pdfplumber.open(file_path) as pdf:
-        for page in pdf.pages:
-            text += page.extract_text() or ""
-    return text
-
 
 def extract_with_regex(text: str, pattern: str) -> Optional[str]:
     match = re.search(pattern, text, re.IGNORECASE | re.MULTILINE)
@@ -23,57 +15,70 @@ def extract_policy_holder_name(text: str) -> Optional[str]:
     pattern = r"\bDear\.?\s+([^\n\r]+)"
     return extract_with_regex(text, pattern)
 
+
 def extract_company_name(text: str) -> Optional[str]:
-    pattern = r"Welcome\s+to\s+(.+?)\s+family"
-    return extract_with_regex(text, pattern)
+    pattern = re.compile(
+        r"Thank\s+you\s+for\s+choosing\s+([\s\S]*?)\s+as\s+your\s+preferred\s+insurance\s+partner\.?",
+        re.IGNORECASE
+    )
+
+    match = pattern.search(text)
+    if match:
+        return match.group(1).strip()
+    return None
 
 def extract_policy_number(text: str) -> Optional[str]:
     pattern = r"Policy\s*(?:No|Number)\.?\s*([0-9]+)"
     return extract_with_regex(text, pattern)
 
+
+
+
 def extract_contact_number(text: str) -> Optional[str]:
-    pattern = (
-        r"(?:Insured\s+Contact\s+No|Customer\s+contact\s+number|Contact\s+No)"
-        r"\s*[:\-]?\s*"
-        r"([0-9Xx*]{8,15})"
-    )
+    """
+    Extract contact number after 'Contact Number'
+    Handles masked and unmasked numbers
+    """
+    pattern = r"Contact\s*Number\s*([Xx\d-]+)"
     match = re.search(pattern, text, re.IGNORECASE)
     return match.group(1) if match else None
 
+
 def extract_tp_cover_dates(text: str) -> Tuple[Optional[str], Optional[str]]:
     """
-    Extract TP cover start and end dates
+    Extract policy start (Valid From) and end date (Renewal Date)
     Returns (start_date, end_date)
     """
     pattern = (
-        r"Cover\s+Period\s+"
-        r"(\d{1,2}\s+[A-Za-z]{3}\s+'\d{2})"
-        r".*?"
-        r"(\d{1,2}\s+[A-Za-z]{3}\s+'\d{2})"
+        r"Valid\s*From\s*[:\-]?\s*"
+        r"(\d{2}-\d{2}-\d{4}).*?"
+        r"Renewal\s*Date\s*[:\-]?\s*"
+        r"(\d{2}-\d{2}-\d{4})"
     )
 
     match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
-
-    if not match:
-        return None, None
-
-    start_date = match.group(1)
-    end_date = match.group(2)
-
-    return start_date, end_date
-
-def extract_premium_amount(text: str) -> str | None:
-    """
-    Extracts premium amount from insurance policy text.
-    Example match: ₹ 843.00
-    """
-    pattern = r"Premium\s*amount\s*:\s*₹?\s*([\d,]+(?:\.\d{2})?)"
-
-    match = re.search(pattern, text, re.IGNORECASE)
     if match:
-        return match.group(1).replace(",", "").strip()
+        return match.group(1), match.group(2)
 
+    return None, None
+
+
+def extract_premium_amount(text: str) -> Optional[str]:
+    """
+    Extract the Total Premium (last number) between 'Premium Details' and 'Nominee Details'.
+    """
+    # Get the block between Premium Details and Nominee Details
+    block_pattern = re.compile(r"Premium Details(.*?)Nominee Details", re.DOTALL)
+    block_match = block_pattern.search(text)
+    
+    if block_match:
+        block = block_match.group(1)
+        # Find all numbers with commas and decimals
+        numbers = re.findall(r"[\d,]+\.\d{2}", block)
+        if numbers:
+            return numbers[-1].strip()  # Last number is Total Premium
     return None
+
 
 def extract_registration_number(text: str) -> str | None:
     """
@@ -88,25 +93,29 @@ def extract_registration_number(text: str) -> str | None:
 
     return None
 
-def extract_vehicle_idv(text: str) -> Optional[float]:
-    """
-    Extract Vehicle IDV from policy text.
-    Returns float value or None.
-    """
 
-    # Pattern: Header followed by numeric row
-    pattern = (
-        r"Vehicle\s+IDV.*?Total\s+IDV.*?\n"
-        r"([\d,]+\.\d{2})"
+def extract_sum_insured_value(text: str) -> Optional[str]:
+    """
+    Extract Sum Insured value from messy PDF/SVG text
+    """
+    # Normalize first (CRITICAL)
+    cleaned = (
+        text.replace("₹", "")
+            .replace("(", " ")
+            .replace(")", " ")
+    )
+    cleaned = re.sub(r"\n+", " ", cleaned)
+
+    pattern = re.compile(
+        r"Sum\s+Insured.*?([\d,]+(?:\.\d{1,2})?)\s+Loyalty\s+Bonus",
+        re.IGNORECASE
     )
 
-    match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
+    match = pattern.search(cleaned)
     if match:
-        value = match.group(1).replace(",", "")
-        return float(value)
+        return match.group(1).replace(",", "").strip()
 
     return None
-
 
 def extract_digital_signer(text: str) -> Optional[str]:
     """
@@ -123,24 +132,14 @@ def extract_digital_signer(text: str) -> Optional[str]:
 
 
 def extract_policy_variant(text: str) -> Optional[str]:
-    """
-    Extract policy name appearing after:
-    'Company Limited. Auto Secure -'
-    and before:
-    'UIN :'
-    Whitespace and line-break tolerant
-    """
-    pattern = (
-        r"Company\s+Limited\.\s*"
-        r"Auto\s+Secure\s*-\s*"
-        r"(.*?)\s*"
-        r"UIN\s*:"
+    pattern = re.compile(
+        r"for\s+(.+?)\s*,?\s*Policy\s+No",
+        re.IGNORECASE
     )
 
-    match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
+    match = pattern.search(text)
     if match:
-        return match.group(1).strip().rstrip("-").strip()
-
+        return match.group(1).strip()
     return None
 
 def extract_policy_metadata(text: str) -> dict:
@@ -155,7 +154,7 @@ def extract_policy_metadata(text: str) -> dict:
         "tp_policy_end_date": end_date,
         "net_premium": extract_premium_amount(text),
         "Vehicle_Registration_No":extract_registration_number(text),
-        "vehicle_idv ":extract_vehicle_idv(text),
+        "sum_insured ":extract_sum_insured_value(text),
         "area_manager" :extract_digital_signer(text)
     }
 
@@ -179,7 +178,7 @@ def save_full_text_to_file(full_text: str, pdf_path: str, output_dir="temp_text"
     return str(txt_path)
 
 
-PDF_PATH = "../../data/motorData/TATA_6104039405-00.pdf"
+PDF_PATH = f"../../data/healthData/HDFC ERGO health/2800000000547300_policy.pdf"
 
 result = extract_text_from_pdf_via_svg_all_pages(PDF_PATH)
 

@@ -63,6 +63,9 @@ import re
 import json
 from pathlib import Path
 
+from PyPDF2 import PdfReader
+
+
 
 # ---------- TEXT NORMALIZATION ----------
 def normalize_text(text: str) -> str:
@@ -123,3 +126,8 @@ def save_outputs(text, pages_data, output_dir="output"):
 
 
 
+reader = PdfReader("../data/healthData/2800000000547300_policy.pdf")
+number_of_pages = len(reader.pages)
+page = reader.pages[0]
+text = page.extract_text()
+print("Text",text)
