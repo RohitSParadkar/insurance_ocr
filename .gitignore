@@ -5,10 +5,12 @@ external_resource/
 *.csv
 *.png
 *.svg
+debug
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
+/code/chroma_db
 
 # C extensions
 *.so

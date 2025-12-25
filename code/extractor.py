@@ -62,7 +62,6 @@ import pdfplumber
 import re
 import json
 from pathlib import Path
-
 from PyPDF2 import PdfReader
 
 
@@ -123,11 +122,26 @@ def save_outputs(text, pages_data, output_dir="output"):
             ensure_ascii=False
         )
 
+def resolve_data_path(input_path: str) -> Path:
+    """
+    Convert paths like '../data/xxx.pdf' to absolute project data paths
+    """
+    base_dir = Path(__file__).resolve().parents[1]
+    data_dir = base_dir / "data"
+
+    path = Path(input_path)
+
+    # Strip everything up to and including 'data'
+    if "data" in path.parts:
+        relative_path = Path(*path.parts[path.parts.index("data") + 1:])
+    else:
+        relative_path = path.name
+
+    return data_dir / relative_path
 
 
-
-reader = PdfReader("../data/healthData/2800000000547300_policy.pdf")
-number_of_pages = len(reader.pages)
-page = reader.pages[0]
-text = page.extract_text()
-print("Text",text)
+# reader = PdfReader("../data/healthData/2800000000547300_policy.pdf")
+# number_of_pages = len(reader.pages)
+# page = reader.pages[0]
+# text = page.extract_text()
+# print("Text",text)

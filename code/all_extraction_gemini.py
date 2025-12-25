@@ -4,7 +4,9 @@ import os
 from datetime import datetime, timezone
 from pypdf import PdfReader
 import google.generativeai as genai
+from extractor import  resolve_data_path
 from dotenv import load_dotenv
+from Extraction_Templates.img_xml_text_extractor import extract_text_from_pdf_via_svg_all_pages
 
 
 # LOAD ENV
@@ -14,7 +16,6 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 if not GEMINI_API_KEY:
     raise EnvironmentError("GEMINI_API_KEY not found in .env file")
 
-PDF_PATH = "../data/motorData/TATA_6100021729-00.pdf"
 
 # FINAL DATABASE SCHEMA
 
@@ -34,16 +35,6 @@ FINAL_SCHEMA = {
     "business_retention_type": "",
     "created_at": ""
 }
-
-# PDF TEXT EXTRACTION
-def extract_text_from_pdf(pdf_path: str) -> str:
-    reader = PdfReader(pdf_path)
-    text = ""
-    for page in reader.pages:
-        page_text = page.extract_text()
-        if page_text:
-            text += page_text + "\n"
-    return text.strip()
 
 # GEMINI SETUP
 
@@ -76,21 +67,6 @@ JSON format:
   "area_manager_rm_name": "",
   "business_retention_type": ""
 }}
-
-Field mapping:
-- insurance_company_name → Insurance Company Name
-- policy_number → Policy No
-- insured_name → Insured Name
-- insured_contact_no → Insured Contact No
-- product_name → Product Name
-- policy_start_date → Policy Start Date
-- policy_expiry_date → Policy Expiry Date
-- sum_assured_idv → Sum Assured / IDV
-- net_premium → Net Premium
-- vehicle_registration_no → Vehicle Registration No
-- posp_name → POSP Name
-- area_manager_rm_name → Area Manager / RM Name
-- business_retention_type → Business / Retention Type
 
 Document text:
 {text}
@@ -125,11 +101,12 @@ Document text:
 
 # MAIN — JSON ONLY OUTPUT
 def main():
-    pdf_text = extract_text_from_pdf(PDF_PATH)
-    print("Extracted_text",pdf_text)
-    total_characters = len(pdf_text)
+    PDF_PATH = resolve_data_path("../data/motorData/Go_Digital/DG_4W_SCHEDULESC_D169759143_1736159709682.pdf")
+    result = extract_text_from_pdf_via_svg_all_pages(PDF_PATH)
+    text = result["full_text"]
+    total_characters = len(text)
     print("Total number of characters in document:", total_characters)
-    result = extract_insurance_metadata(pdf_text)
+    result = extract_insurance_metadata(text)
     print(json.dumps(result, ensure_ascii=False))
 
 # RUN

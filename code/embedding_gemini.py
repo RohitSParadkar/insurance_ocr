@@ -12,7 +12,9 @@ import google.generativeai as genai
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
-
+from extractor import  resolve_data_path
+from pathlib import Path 
+from Extraction_Templates.img_xml_text_extractor import extract_text_from_pdf_via_svg_all_pages
 # ==================================================
 # ENV SETUP
 # ==================================================
@@ -27,6 +29,9 @@ model = genai.GenerativeModel("gemini-2.5-flash")
 # ==================================================
 # CONFIG
 # ==================================================
+
+#
+
 PDF_PATH = "../data/100009809000.pdf"
 BASE_CHROMA_DIR = "./chroma_db"
 
@@ -98,14 +103,36 @@ def create_vector_db(chunks, chroma_dir):
 # 5. FIELD-WISE QUERIES FOR RAG
 # ==================================================
 FIELD_QUERIES = [
-    "insurance company name insurer",
-    "policy number certificate number",
-    "policy holder proposer insured name",
-    "policy start date commencement date",
-    "policy end date expiry date",
-    "communication address residential address",
-    "insured member details name age gender sum insured relationship",
-    "nominee details nominee name age gender"
+    # Policy
+    "policy number policy no certificate number cover note number",
+
+    # Insured details
+    "insured name policy holder proposer name",
+    "insured contact number mobile number phone number contact details",
+
+    # Insurance company
+    "insurance company name insurer underwriting company",
+
+    # Product
+    "product name plan name policy type scheme name",
+
+    # Dates
+    "policy start date commencement date inception date",
+    "policy expiry date policy end date expiration date",
+    "period of insurance od cover period own damage cover start date end date"
+
+    # Financials
+    "sum assured sum insured idv insured declared value",
+    "net premium total premium payable final premium",
+
+    # Vehicle (Motor policies)
+    "vehicle registration number registration no rc number vehicle number",
+
+    # POSP / Agent
+    "posp name agent name intermediary name advisor name",
+
+    # Relationship manager
+    "area manager name relationship manager rm name servicing manager"
 ]
 
 def retrieve_relevant_text(vectordb, k=1):
@@ -197,12 +224,14 @@ Document text:
 # 8. MAIN PIPELINE
 # ==================================================
 def main():
-    # Extract PDF text
-    raw_text = extract_text_from_pdf(PDF_PATH)
-    print("Total characters in PDF:", len(raw_text))
+    
+    PDF_PATH = resolve_data_path("../data/motorData/TATA_6100021729-00.pdf")
+    result = extract_text_from_pdf_via_svg_all_pages(PDF_PATH)
+    text = result["full_text"]
+    print("Total characters in PDF:", len(text))
 
     # Chunk text
-    chunks = chunk_text(raw_text)
+    chunks = chunk_text(text)
 
     # Create fresh Chroma folder per document
     chroma_dir = create_fresh_chroma_dir(PDF_PATH)
@@ -212,13 +241,14 @@ def main():
     rag_text = retrieve_relevant_text(vectordb)
     print("Context",rag_text)
     print("Characters sent to LLM:", len(rag_text))
+    
 
     # Extract structured metadata
-    result = extract_insurance_metadata(rag_text)
-    insert_json(result)
+    # result = extract_insurance_metadata(rag_text)
+    # insert_json(result)
 
     # Print JSON
-    print(json.dumps(result, indent=2, ensure_ascii=False))
+    # print(json.dumps(result, indent=2, ensure_ascii=False))
 
 # ==================================================
 # RUN

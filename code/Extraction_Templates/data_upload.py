@@ -3,7 +3,7 @@ import json
 import traceback
 
 from mongo_push import insert_json
-from NivaBupa import (
+from TATA_AIG_2_Wheeler import (
     extract_text_from_pdf_via_svg_all_pages,
     extract_policy_metadata,
 )
@@ -11,7 +11,7 @@ from NivaBupa import (
 # ==============================
 # CONFIG
 # ==============================
-PDF_FOLDER_PATH = "../../data/healthData/Niva Buppa/"
+PDF_FOLDER_PATH = "../../data/motorData/TATA_AIG/version2"
 
 # ==============================
 # PROCESS SINGLE PDF
